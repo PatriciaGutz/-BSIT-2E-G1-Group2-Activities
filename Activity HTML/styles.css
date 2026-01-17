@@ -1,0 +1,33 @@
+.box {
+    background: steelblue;
+    color:white;
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #000;
+}
+
+.header {
+    display: flex;            
+    justify-content: space-between; 
+    align-items: center;         
+    padding: 50px;
+    font-size: 3rem;
+    background-color: #f074c0;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: black;00
+    margin-left: 20px;
+    font-weight: bold;
+  }
+
+  @media (max-width: 600px) {
+    .header {
+      flex-direction: column;   
+    }
+    
+    .nav-links {
+      margin-top: 15px;         
+    }
+  }
