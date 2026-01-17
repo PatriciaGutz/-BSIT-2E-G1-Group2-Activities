@@ -190,3 +190,19 @@ body {
 .btn:hover {
   background-color: #e05aa8;
 }
+/* ===== FOOTER ===== */
+.site-footer {
+  background-color: #f074c0;
+  padding: 20px;
+  margin-top: 50px; /* optional spacing above footer */
+}
+
+.footer-grid {
+  display: grid;
+  place-items: center;
+}
+
+.site-footer p {
+  color: #ffffff;
+  font-size: 0.9rem;
+}
