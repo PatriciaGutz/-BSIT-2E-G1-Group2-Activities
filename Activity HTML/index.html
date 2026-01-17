@@ -1,62 +1,104 @@
-<!DOCTYPE html>
-<html>
-<head>
-<link rel="stylesheet" href="styles.css">
-</head>
-<body>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Group 2 Website</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="logo">Group 2 Website</div>
+      <nav class="nav-links">
+        <a href="#">Home</a>
+        <a href="#">Features</a>
+        <a href="#">Pricing</a>
+        <a href="#">Team</a>
+        <a href="#">Contact</a>
+      </nav>
+    </header>
 
-<header class="header">
-  <div class="logo">Group 2 Website</div>
-  <nav class="nav-links">
-    <a href="#">Home</a>
-    <a href="#">Features</a>
-    <a href="#">Pricing</a>
-    <a href="#">Team</a>
-    <a href="#">Contact</a>
-  </nav>
-</header>
+    <div class="carousel">
+      <div class="group">
+        <div class="card">1</div>
+        <div class="card">2</div>
+        <div class="card">3</div>
+        <div class="card">4</div>
+        <div class="card">5</div>
+        <div class="card">6</div>
+      </div>
+      <div aria-hidden class="group">
+        <div class="card">1</div>
+        <div class="card">2</div>
+        <div class="card">3</div>
+        <div class="card">4</div>
+        <div class="card">5</div>
+        <div class="card">6</div>
+      </div>
+    </div>
 
-<div class="carousel">
-          <div class="group">
-            <div class="card">1</div>
-            <div class="card">2</div>
-            <div class="card">3</div>
-            <div class="card">4</div>
-            <div class="card">5</div>
-            <div class="card">6</div>
-          </div>
-          <div aria-hidden class="group">
-            <div class="card">1</div>
-            <div class="card">2</div>
-            <div class="card">3</div>
-            <div class="card">4</div>
-            <div class="card">5</div>
-            <div class="card">6</div>
-          </div>
+    <section class="features">
+      <h2>Features</h2>
+      <div class="features-container">
+        <div class="feature-card">
+          <div class="image-placeholder">600 x 400</div>
+          <h3>Responsive Grid</h3>
+          <p>12-column system adaptable to all devices.</p>
         </div>
-</body>
+
+        <div class="feature-card">
+          <div class="image-placeholder">600 x 400</div>
+          <h3>Clean UI</h3>
+          <p>Professional design with cards, colors, and typography.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="image-placeholder">600 x 400</div>
+          <h3>Team Collaboration</h3>
+          <p>
+            Each member works on separate CSS/HTML files using Git branches.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="pricing">
+      <h2 class="section-title">Pricing Plans</h2>
+
+      <div class="pricing-container">
+        <div class="pricing-card">
+          <h3>Basic</h3>
+          <p class="price">$10<span>/mo</span></p>
+          <ul>
+            <li>1 Project</li>
+            <li>5 GB Storage</li>
+            <li>Email Support</li>
+          </ul>
+          <button class="btn">Choose</button>
+        </div>
+
+        <div class="pricing-card featured">
+          <h3>Pro</h3>
+          <p class="price">$30<span>/mo</span></p>
+          <ul>
+            <li>10 Projects</li>
+            <li>50 GB Storage</li>
+            <li>Priority Support</li>
+          </ul>
+          <button class="btn">Choose</button>
+        </div>
+
+        <div class="pricing-card">
+          <h3>Enterprise</h3>
+          <p class="price">$100<span>/mo</span></p>
+          <ul>
+            <li>Unlimited Projects</li>
+            <li>500 GB Storage</li>
+            <li>Dedicated Support</li>
+          </ul>
+          <button class="btn">Choose</button>
+        </div>
+      </div>
+    </section>
+  </body>
 </html>
-
-<section class="features">
-  <h2>Features</h2>
-  <div class="features-container">
-    <div class="feature-card">
-      <div class="image-placeholder">600 x 400</div>
-      <h3>Responsive Grid</h3>
-      <p>12-column system adaptable to all devices.</p>
-    </div>
-
-    <div class="feature-card">
-      <div class="image-placeholder">600 x 400</div>
-      <h3>Clean UI</h3>
-      <p>Professional design with cards, colors, and typography.</p>
-    </div>
-
-    <div class="feature-card">
-      <div class="image-placeholder">600 x 400</div>
-      <h3>Team Collaboration</h3>
-      <p>Each member works on separate CSS/HTML files using Git branches.</p>
-    </div>
-
-  </div>
-</section>
