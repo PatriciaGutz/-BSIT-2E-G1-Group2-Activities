@@ -69,3 +69,18 @@
   from{translate: 0;}
   to {translate: -100%;}
 }
+
+.site-footer {
+  background-color: #f074c0;
+  padding: 20px;
+}
+
+.footer-grid {
+  display: grid;
+  place-items: center; 
+}
+
+.site-footer p {
+  color: #ffffff;
+  font-size: 0.9rem;
+}
