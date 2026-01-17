@@ -31,3 +31,56 @@
       margin-top: 15px;         
     }
   }
+
+.carousel {
+  margin: 100px;
+  width: 90%;
+  border: 5px solid #1F1E33;
+  display: flex;
+  overflow-x: auto; 
+  gap: 1em;
+}
+
+.group{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+  animation: spin 5s infinite linear;
+  padding-right: 1em;
+}
+
+.carousel::-webkit-scrollbar{
+  display: none;
+}
+
+.card {
+  flex: 0 0 5em;
+  height: 5em;
+  padding: 1em;
+  background: #f074c0;
+  font-size: 3rem;
+  border-radius: .2em;
+  text-align: center;
+  align-content: center;
+}
+
+@keyframes spin {
+  from{translate: 0;}
+  to {translate: -100%;}
+}
+
+.site-footer {
+  background-color: #f074c0;
+  padding: 20px;
+}
+
+.footer-grid {
+  display: grid;
+  place-items: center; 
+}
+
+.site-footer p {
+  color: #ffffff;
+  font-size: 0.9rem;
+}
