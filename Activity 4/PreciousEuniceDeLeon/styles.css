@@ -1,0 +1,112 @@
+* {
+    box-sizing: border-box;
+    font-family: "Segoe UI", Tahoma, sans-serif;
+}
+
+body {
+    background: #f2f4f7;
+    padding: 40px;
+}
+
+
+.card {
+    max-width: 1000px;
+    margin: auto;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    overflow: hidden;
+}
+
+
+.card-header {
+    background: #136cfb;
+    color: white;
+    padding: 18px 25px;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+
+.card-body {
+    padding: 30px;
+}
+
+
+.card-body h3 {
+    color: #136cfb;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 20px;
+}
+
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #dcdfe6;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+input::placeholder {
+    color: #aaa;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #136cfb;
+}
+
+button {
+    width: 100%;
+    margin-top: 25px;
+    padding: 14px;
+    background: #136cfb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #0f5ad1;
+}
+
+#notification {
+    margin-top: 25px;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+#output {
+    display: none;
+    margin-top: 15px;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+    line-height: 1.8;
+}

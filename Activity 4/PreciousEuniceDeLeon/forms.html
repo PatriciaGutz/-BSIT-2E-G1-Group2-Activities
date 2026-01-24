@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Personal Data Sheet</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <div class="card">
+        <div class="card-header">
+            Personal Data Sheet
+        </div>
+
+        <div class="card-body">
+            <h3>Personal Information</h3>
+
+            <div class="form-group">
+                <label for="fullname">Full Name</label>
+                <input id="fullname" type="text">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    <input id="dob" type="date">
+                </div>
+
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <select id="gender">
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Prefer not to say">Prefer not to say</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="status">Civil Status</label>
+                <select id="status">
+                    <option value="">Select Status</option>
+                    <option value="Single">Single</option>
+                    <option value="Married">Married</option>
+                    <option value="Widow">Widow</option>
+                </select>
+            </div>
+
+            <h3>Contact Information</h3>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input id="email" type="text">
+            </div>
+
+            <div class="form-group">
+                <label for="mobile">Mobile Number</label>
+                <input id="mobile" type="text">
+            </div>
+
+            <div class="form-group">
+                <label for="address">Complete Address</label>
+                <input id="address" type="text">
+            </div>
+
+            <button onclick="submitData()">Submit Personal Data Sheet</button>
+
+            <p id="notification"></p>
+            <div id="output"></div>
+        </div>
+    </div>
+
+    <script>
+        function submitData(){
+            let fullName = document.getElementById("fullname").value;
+            let dob = document.getElementById("dob").value;
+            let gender = document.getElementById("gender").value;
+            let status = document.getElementById("status").value;
+            let email = document.getElementById("email").value;
+            let mobile = document.getElementById("mobile").value;
+            let address = document.getElementById("address").value;
+
+            const notification = document.getElementById("notification");
+
+if (!fullName) return showError("Please enter your full name");
+if (!dob) return showError("Please enter your date of birth");
+if (!gender) return showError("Please select your gender");
+if (!status) return showError("Please select your status");
+if (!email) return showError("Please enter your email");
+if (!mobile) return showError("Please enter your mobile number");
+if (!address) return showError("Please enter your address");
+
+function showError(message) {
+  notification.innerText = message;
+  notification.style.color = "red";
+}
+
+
+            document.getElementById("notification").innerText =
+                "Submitted Information";
+            document.getElementById("notification").style.color = "green";
+
+            document.getElementById("output").style.display = "block";
+            let output = document.getElementById("output");
+            output.style.display = "block";
+            document.getElementById("output").innerHTML =
+                "<strong>Full Name:</strong> " + fullName + "<br>" +
+                "<strong>Date of Birth:</strong> " + dob + "<br>" +
+                "<strong>Gender:</strong> " + gender + "<br>" +
+                "<strong>Status:</strong> " + status + "<br>" +
+                "<strong>Email:</strong> " + email + "<br>" +
+                "<strong>Mobile:</strong> " + mobile + "<br>" +
+                "<strong>Address:</strong> " + address;
+        }
+    </script>
+
+</body>
+</html>
