@@ -1,1 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Data Sheet</title>
 
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            color: white;
+            padding: 12px;
+            font-weight: bold;
+            border-radius: 4px 4px 0 0;
+            margin: -20px -20px 20px -20px;
+        }
+
+        .blue { background: #0d6efd; }
+        .green { background: #198754; }
+
+        .row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .field {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        input, select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        input:focus,
+        input:not(:placeholder-shown),
+        select:focus,
+        select:valid {
+            background-color: #e6f2ff;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #0d6efd;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0b5ed7;
+        }
+
+        .result {
+            display: none;
+        }
+
+        .error-message {
+            display: none;
+            color: red;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+        <div class="card-header blue">Personal Data Sheet</div>
+
+        <h3>Personal Information</h3>
+
+        <div class="row">
+            <div class="field">
+                <label>Full Name</label>
+                <input type="text" id="fullname" placeholder=" ">
+            </div>
+
+            <div class="field">
+                <label>Date of Birth</label>
+                <input type="date" id="dob">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="field">
+                <label>Gender</label>
+                <select id="gender" required>
+                    <option value="" disabled selected>Select</option>
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>Prefer not to say</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label>Civil Status</label>
+                <select id="status" required>
+                    <option value="" disabled selected>Select</option>
+                    <option>Single</option>
+                    <option>Married</option>
+                    <option>Widowed</option>
+                </select>
+            </div>
+        </div>
+
+        <h3>Contact Information</h3>
+
+        <div class="row">
+            <div class="field">
+                <label>Email Address</label>
+                <input type="email" id="email" placeholder=" ">
+            </div>
+
+            <div class="field">
+                <label>Mobile Number</label>
+                <input type="text" id="mobile" placeholder=" ">
+            </div>
+        </div>
+
+        <div class="field">
+            <label>Complete Address</label>
+            <input type="text" id="address" placeholder=" ">
+        </div>
+
+        <br>
+        <button onclick="submitData()">Submit Personal Data Sheet</button>
+        <div class="error-message" id="errorMessage"></div>
+    </div>
+
+    <div class="card result" id="result">
+        <div class="card-header green">Submitted Information</div>
+
+        <p><b>Full Name:</b> <span id="rname"></span></p>
+        <p><b>Date of Birth:</b> <span id="rdob"></span></p>
+        <p><b>Gender:</b> <span id="rgender"></span></p>
+        <p><b>Status:</b> <span id="rstatus"></span></p>
+        <p><b>Email:</b> <span id="remail"></span></p>
+        <p><b>Mobile:</b> <span id="rmobile"></span></p>
+        <p><b>Address:</b> <span id="raddress"></span></p>
+    </div>
+
+</div>
+
+<script>
+function submitData() {
+
+    var fullname = document.getElementById("fullname").value;
+    var dob = document.getElementById("dob").value;
+    var gender = document.getElementById("gender").value;
+    var status = document.getElementById("status").value;
+    var email = document.getElementById("email").value;
+    var mobile = document.getElementById("mobile").value;
+    var address = document.getElementById("address").value;
+    var errorMessage = document.getElementById("errorMessage");
+
+    if (fullname === "") {
+        errorMessage.innerText = "Please enter your full name";
+        errorMessage.style.display = "block";
+        return;
+    }
+
+    if (dob === "") {
+        errorMessage.innerText = "Please enter your date of birth";
+        errorMessage.style.display = "block";
+        return;
+    }
+
+    if (gender === "") {
+        errorMessage.innerText = "Please select your gender";
+        errorMessage.style.display = "block";
+        return;
+    }
+
+    if (status === "") {
+        errorMessage.innerText = "Please select your civil status";
+        errorMessage.style.display = "block";
+        return;
+    }
+
+    if (email === "") {
+        errorMessage.innerText = "Please enter your email";
+        errorMessage.style.display = "block";
+        return;
+    }
+
+    if (mobile === "") {
+        errorMessage.innerText = "Please enter your mobile number";
+        errorMessage.style.display = "block";
+        return;
+    }
+
+    if (address === "") {
+        errorMessage.innerText = "Please enter your address";
+        errorMessage.style.display = "block";
+        return;
+    }
+
+    errorMessage.style.display = "none";
+
+    document.getElementById("rname").innerText = fullname;
+    document.getElementById("rdob").innerText = dob;
+    document.getElementById("rgender").innerText = gender;
+    document.getElementById("rstatus").innerText = status;
+    document.getElementById("remail").innerText = email;
+    document.getElementById("rmobile").innerText = mobile;
+    document.getElementById("raddress").innerText = address;
+
+    document.getElementById("result").style.display = "block";
+}
+</script>
+
+</body>
+</html>
