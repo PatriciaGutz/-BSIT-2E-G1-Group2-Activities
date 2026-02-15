@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Task Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="py-4">
+    <div class="container">
+        <div class="text-center mb-4">
+            <h1 class="fw-bold purple-text">Student Task Manager</h1>
+            <p id="todayDate" class="text-muted fw-bold"></p>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-purple text-white fw-bold">
+                        Student Task Entry
+        </div>
+            <div class="card-body">
+                <form id="taskForm">
+                    <h6 class="purple-text fw-bold mb-3 border-bottom pb-2">Task Information</h6>
+        <div class="row g-3 mb-3">
+            <div class="col-12">
+                <label class="form-label">Task Title</label>
+                    <input type="text" class="form-control" id="taskName" placeholder="Enter task title">
+                        <small id="nameErr" class="text-danger fw-bold"></small>
+        </div>
+            <div class="col-12">
+                <label class="form-label">Task Description</label>
+                    <textarea class="form-control" id="taskDesc" rows="2" placeholder="Brief details..."></textarea>
+        </div>
+            <div class="col-md-6">
+                <label class="form-label">Due Date</label>
+                    <input type="date" class="form-control" id="dueDate">
+                        <small id="dateErr" class="text-danger fw-bold"></small>
+        </div>
+            <div class="col-md-6">
+                <label class="form-label">Priority</label>
+                    <select class="form-select" id="priority">
+                        <option value="">Select Priority</option>
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                            </select>
+                                <small id="priorityErr" class="text-danger fw-bold"></small>
+        </div>
+            </div>
+                <button type="button" id="submitBtn" onclick="saveTask()" class="btn btn-purple w-100 fw-bold">
+                Save Task Data
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card shadow-sm" id="outputSection" style="display: none;">
+            <div class="card-header bg-success text-white fw-bold">
+            Submitted Task List
+        </div>
+            <div class="card-body p-0">
+                <table class="table table-bordered mb-0">
+                    <thead class="table-light">
+                        <tr>
+                        <th>Task Name</th>
+                        <th>Description</th>
+                        <th>Duedate</th>
+                        <th>Priority</th>
+                        <th>Status</th>
+                            <th class="text-center">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="taskTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

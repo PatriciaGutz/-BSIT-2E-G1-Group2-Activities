@@ -1,0 +1,41 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.purple-text {
+    color: #6f42c1;
+}
+
+.bg-purple {
+    background-color: #6f42c1 !important;
+}
+
+.btn-purple {
+    background-color: #6f42c1;
+    color: white;
+}
+
+.btn-purple:hover {
+    background-color: #59359a;
+    color: white;
+}
+
+.text-danger {
+    font-size: 0.8rem;
+    display: block;
+    margin-top: 4px;
+}
+
+.task-done {
+    text-decoration: line-through;
+    color: #6c757d;
+    background-color: #f3e5f5 !important; /* Very light purple for done */
+}
+
+.border-high { border-left: 6px solid #dc3545 !important; }
+.border-medium { border-left: 6px solid #ffc107 !important; }
+.border-low { border-left: 6px solid #198754 !important; }
+
+td {
+    vertical-align: middle;
+}
