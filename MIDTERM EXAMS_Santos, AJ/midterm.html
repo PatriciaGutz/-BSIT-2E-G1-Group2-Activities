@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <style>
+            body{
+                margin: 0;
+                padding: 20px;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background-color: #f4f4f9;
+            }
+            .title{ 
+                font-family: sans-serif;
+                font-size: 30px;
+                font-weight: bold;
+                text-align: center;
+                color: #333;
+                margin-bottom: 30px;
+            }
+            .formInput{
+                padding-left: 250px;
+                background-color: white;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+                max-width: 500px;
+                margin: 0 auto 30px auto;
+            }
+            .formInput input, .formInput select{
+                width: 100%;
+                padding: 10px;
+                margin: 5px 0 15px 0;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                box-sizing: border-box;
+                font-size: 14px;
+            }
+            .formInput input:focus, .formInput select:focus{
+                outline: none;
+                border-color: #4CAF50;
+            }
+            #taskAddBTN{
+                background-color: #4CAF50;
+                color: white;
+                padding: 12px 30px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+                width: 100%;
+            }
+            #taskAddBTN:hover{
+                background-color: #45a049;
+            }
+            #errorMessage{
+                color: red;
+                font-size: 14px;
+                text-align: center;
+                margin-top: 10px;
+            }
+            table{
+                width: 90%;
+                margin: 5px auto;
+                border-collapse: collapse;
+                background: white;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+                border-radius: 8px;
+                overflow: hidden;
+            }
+            th, td{
+                padding: 12px 15px;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+            }
+            th{
+                background-color: #4CAF50;
+                color: white;
+                font-weight: bold;
+            }
+            tr:hover{
+                background-color: #f5f5f5;
+            }
+            .option-high{
+                color: red;
+                font-weight: bold;
+            }
+            .option-medium{
+                color: orange;
+                font-weight: bold;
+            }
+            .option-low{
+                color: green;
+                font-weight: bold;
+            }
+            .priority-high{
+                color: red;
+                font-weight: bold;
+            }
+            .priority-medium{
+                color: orange;
+                font-weight: bold;
+            }
+            .priority-low{
+                color: green;
+                font-weight: bold;
+            }
+            .status-pending{
+                color: #2196F3;
+                font-weight: bold;
+            }
+            .status-completed{
+                color: green;
+                font-weight: bold;
+                text-decoration: line-through;
+            }
+            .delete-btn{
+                background-color: #f44336;
+                color: white;
+                border: none;
+                padding: 8px 12px;
+                border-radius: 4px;
+                cursor: pointer;
+                margin-right: 5px;
+                font-size: 12px;
+            }
+            .delete-btn:hover{
+                background-color: #da190b;
+            }
+            .edit-btn{
+                background-color: #ff9800;
+                color: white;
+                border: none;
+                padding: 8px 12px;
+                border-radius: 4px;
+                cursor: pointer;
+                margin-right: 5px;
+                font-size: 12px;
+            }
+            .edit-btn:hover{
+                background-color: #e68900;
+            }
+            .complete-btn{
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                padding: 8px 12px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 12px;
+            }
+            .complete-btn:hover{
+                background-color: #45a049;
+            }
+            .completed-row{
+                background-color: #e8f5e9;
+            }
+            .completed-row td{
+                text-decoration: line-through;
+                color: #888;
+            }
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 1;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0,0,0,0.4);
+            }
+            .modal-content {
+                background-color: white;
+                margin: 15% auto;
+                padding: 20px;
+                border: 1px solid #888;
+                width: 50%;
+                max-width: 400px;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            }
+            .modal-buttons{
+                text-align: right;
+                margin-top: 15px;
+            }
+            .modal-buttons button{
+                padding: 8px 16px;
+                margin-left: 10px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+            .save-btn{
+                background-color: #4CAF50;
+                color: white;
+            }
+            .cancel-btn{
+                background-color: #999;
+                color: white;
+            }
+            .edit-form input, .edit-form select{
+                width: 100%;
+                padding: 10px;
+                margin: 5px 0 15px 0;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+        </style>
+
+        <title>
+            Student Task Manager
+        </title>
+    </head>
+
+    <body>
+        <h1 class = "title">
+          Student Task Manager
+        </h1>
+ 
+        <div class = "formInput">
+            <input type = "text" id = "taskTitle" placeholder = "Task Title"> <br><br>
+            <input type = "text" id = "taskDescription" placeholder= "Task Description"><br><br>
+            <input type = "date" id = "taskDate"><br><br>
+            <select id = "taskPriority">
+                <option id = "nullSelect" value = "">
+                    Select Option
+                </option >
+                <option class = "option-high" value = "High">
+                    High
+                </option>
+                <option class = "option-medium" value = "Medium">
+                    Medium
+                </option>
+                <option class = "option-low" value = "Low">
+                    Low
+                </option>
+            </select>
+            <br><br>
+            <button onclick="AddTask()" id = "taskAddBTN">Add Task</button>
+            <br><br>
+            <p id = "errorMessage"></p>
+        </div>
+        
+        <table id = "taskTable">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Priority</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id = "taskTableBody">
+            </tbody>
+        </table>
+
+        <div id="editModal" class="modal">
+            <div class="modal-content">
+                <h2>Edit Task</h2>
+                <div class="edit-form">
+                    <input type = "hidden" id = "editIndex">
+                    <input type = "text" id = "editTitle" placeholder = "Task Title"> <br><br>
+                    <input type = "text" id = "editDescription" placeholder= "Task Description"><br><br>
+                    <input type = "date" id = "editDate"><br><br>
+                    <select id = "editPriority">
+                        <option value = "High">High</option>
+                        <option value = "Medium">Medium</option>
+                        <option value = "Low">Low</option>
+                    </select>
+                </div>
+                <div class="modal-buttons">
+                    <button class="cancel-btn" onclick="closeModal()">Cancel</button>
+                    <button class="save-btn" onclick="saveEdit()">Save</button>
+                </div>
+            </div>
+        </div>
+    </body>
+    
+    <script>
+  
+        function AddTask(){
+            var title = document.getElementById("taskTitle").value;
+            var desc = document.getElementById("taskDescription").value;
+            var date = document.getElementById("taskDate").value;
+            var priority = document.getElementById("taskPriority").value;
+            var errorMessage = document.getElementById("errorMessage");
+
+
+            errorMessage.innerText = "";
+
+            if(!title.trim()){
+                errorMessage.innerText = "Task Name cannot be Empty.";
+                return;
+            }
+
+    
+            if(!date){
+                errorMessage.innerText = "Date cannot be Empty.";
+                return;
+            }
+            var today = new Date();
+            today.setHours(0, 0, 0, 0);
+            var due = new Date(date);
+            
+            if(due < today){
+                errorMessage.innerText = "Due Date Cannot be from the Past.";
+                return;
+            }
+
+            if(!priority || priority === "Select Option"){
+                errorMessage.innerText = "Please select a Priority.";
+                return;
+            }
+
+            var table = document.getElementById("taskTableBody");
+            var row = table.insertRow();
+            
+
+            row.dataset.title = title;
+            row.dataset.description = desc;
+            row.dataset.date = date;
+            row.dataset.priority = priority;
+            row.dataset.status = "Pending";
+
+            var titleCell = row.insertCell(0);
+            var descCell = row.insertCell(1);
+            var prioCell = row.insertCell(2);
+            var dateCell = row.insertCell(3);
+            var statCell = row.insertCell(4);
+            var actCell = row.insertCell(5);
+
+            titleCell.innerText = title;
+            descCell.innerText = desc;
+            dateCell.innerText = date;
+            prioCell.innerText = priority;
+            statCell.innerText = "Pending";
+
+            if(priority === "High"){
+                prioCell.className = "priority-high";
+            } else if(priority === "Medium"){
+                prioCell.className = "priority-medium";
+            } else if(priority === "Low"){
+                prioCell.className = "priority-low";
+            }
+
+            statCell.className = "status-pending";
+
+    
+            var delBTN = document.createElement("button");
+            delBTN.innerText = "Delete";
+            delBTN.className = "delete-btn";
+            delBTN.onclick = function(){
+                deleteTask(row);
+            }
+
+            var editBTN = document.createElement("button");
+            editBTN.innerText = "Edit";
+            editBTN.className = "edit-btn";
+            editBTN.onclick = function(){
+                editTask(row);
+            }
+
+            var completeBTN = document.createElement("button");
+            completeBTN.innerText = "Complete";
+            completeBTN.className = "complete-btn";
+            completeBTN.onclick = function(){
+                completeTask(row, completeBTN);
+            }
+           
+            actCell.appendChild(delBTN);
+            actCell.appendChild(editBTN);
+            actCell.appendChild(completeBTN);
+
+       
+            clearForm();
+        }
+
+      
+        function clearForm(){
+            document.getElementById("taskTitle").value = "";
+            document.getElementById("taskDescription").value = "";
+            document.getElementById("taskDate").value = "";
+            document.getElementById("taskPriority").value = "";
+            document.getElementById("errorMessage").innerText = "";
+        }
+
+
+
+        function editTask(row){
+            var modal = document.getElementById("editModal");
+            
+ 
+            document.getElementById("editTitle").value = row.dataset.title;
+            document.getElementById("editDescription").value = row.dataset.description;
+            document.getElementById("editDate").value = row.dataset.date;
+            document.getElementById("editPriority").value = row.dataset.priority;
+            
+  
+            modal.dataset.rowIndex = row.rowIndex;
+            
+
+            modal.style.display = "block";
+        }
+
+        function saveEdit(){
+            var modal = document.getElementById("editModal");
+            var row = modal.currentRow;
+
+            var title = document.getElementById("editTitle").value;
+            var desc = document.getElementById("editDescription").value;
+            var date = document.getElementById("editDate").value;
+            var priority = document.getElementById("editPriority").value;
+
+            if(!title.trim()){
+                alert("Task Name cannot be Empty.");
+                return;
+            }
+            if(!date){
+                alert("Date cannot be Empty.");
+                return;
+            }
+
+            var today = new Date();
+            today.setHours(0,0,0,0);
+            var due = new Date(date);
+
+            if(due < today){
+                alert("Due Date Cannot be from the Past.");
+                return;
+            }
+
+            row.dataset.title = title;
+            row.dataset.description = desc;
+            row.dataset.date = date;
+            row.dataset.priority = priority;
+
+            row.cells[0].innerText = title;
+            row.cells[1].innerText = desc;
+            row.cells[2].innerText = priority;
+            row.cells[3].innerText = date;
+
+            row.cells[2].className = "";
+            if(priority === "High") row.cells[2].className = "priority-high";
+            else if(priority === "Medium") row.cells[2].className = "priority-medium";
+            else row.cells[2].className = "priority-low";
+
+            closeModal();
+        }
+
+        function closeModal(){
+            var modal = document.getElementById("editModal");
+            modal.style.display = "none";
+        }
+
+        function completeTask(row, button){
+            var status = row.dataset.status;
+            
+            if(status === "Pending"){
+                row.dataset.status = "Completed";
+                row.cells[4].innerText = "Completed";
+                row.cells[4].className = "status-completed";
+                row.classList.add("completed-row");
+                button.innerText = "Undo";
+                
+                row.cells[5].querySelector(".edit-btn").disabled = true;
+                row.cells[5].querySelector(".edit-btn").style.backgroundColor = "#ccc";
+            } else {
+                row.dataset.status = "Pending";
+                row.cells[4].innerText = "Pending";
+                row.cells[4].className = "status-pending";
+                row.classList.remove("completed-row");
+                button.innerText = "Complete";
+                
+                var editBtn = row.cells[5].querySelector(".edit-btn");
+                editBtn.disabled = false;
+                editBtn.style.backgroundColor = "";
+            }   
+        }
+
+        function editTask(row){
+             var modal = document.getElementById("editModal");
+
+            document.getElementById("editTitle").value = row.dataset.title;
+            document.getElementById("editDescription").value = row.dataset.description;
+            document.getElementById("editDate").value = row.dataset.date;
+            document.getElementById("editPriority").value = row.dataset.priority;
+            modal.currentRow = row;
+            modal.style.display = "block";
+        }
+    </script>
+</html>
