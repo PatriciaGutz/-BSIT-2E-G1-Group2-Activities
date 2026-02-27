@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Task Manager</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #eef1f7;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-top: -25px;
+            margin-bottom: 20px;
+        }
+
+        .header h2 { margin-bottom: 2px; }
+
+        .header h5 { 
+            margin-top: 0;
+            font-weight: normal; 
+         }
+
+        .form-row {
+            text-align: center;
+            display: grid;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .form-row2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        input, select, textarea {
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        textarea { height: 80px; resize: vertical; }
+
+        button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            filter: brightness(1.2);
+            transform: scale(1.05);
+        }
+
+        .add-btn { background: #5346e5; color: white; width: 100%; }
+        .complete-btn { background: #10b981; color: white; }
+        .edit-btn { background: #f59e0b; color: white; }
+        .delete-btn { background: #ef4444; color: white; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        th { background: #f8fafc; color: #64748b; }
+
+        .priority-high { color: #ef4444; font-weight: bold; }
+        .priority-medium { color: #f59e0b; font-weight: bold; }
+        .priority-low { color: #10b981; font-weight: bold; }
+
+        .completed-row {
+            background-color: #f1f5f9;
+            text-decoration: line-through;
+            color: #94a3b8;
+        }
+
+        .error { color: #ef4444; font-size: 14px; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h2>📚 Student Task Manager</h2>
+        <h5>Sat Feb 14 2026</h5>
+    </div>
+    
+    <div class="form-row">
+        <input type="text" id="title" placeholder="Task Title">
+        <textarea id="desc-box" placeholder="Task Description"></textarea>
+    </div>  
+    <div class="form-row">
+        <div class="form-row2">
+            <select id="priority">
+            <option value="">Priority</option>
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+        </select>
+        <input type="date" id="dueDate">
+        </div>
+    </div>    
+        <button class="add-btn" id="submitBtn" onclick="addItem()">Add Task</button>
+    <p id="errorMessage" class="error"></p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Priority</th>
+                <th>Due Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="taskList"></tbody>
+    </table>
+</div>
+
+<script>
+    let editMode = false;
+    let editTargetRow = null;
+
+    function addItem() {
+        const titleInput = document.getElementById("title");
+        const descInput = document.getElementById("desc-box");
+        const priorityInput = document.getElementById("priority");
+        const dateInput = document.getElementById("dueDate");
+        const errorDisplay = document.getElementById("errorMessage");
+
+        const titleValue = titleInput.value.trim();
+        const descValue = descInput.value.trim();
+        const priorityValue = priorityInput.value;
+        const dateValue = dateInput.value;
+        const today = new Date().toISOString().split("T")[0];
+
+        errorDisplay.innerText = "";
+
+        if (!titleValue || !descValue || !priorityValue || !dateValue) {
+            errorDisplay.innerText = "All fields are required.";
+            return;
+        }
+        if (dateValue < today) {
+            errorDisplay.innerText = "Due date cannot be in the past.";
+            return;
+        }
+
+        if (editMode) {
+            updateRow(titleValue, descValue, priorityValue, dateValue);
+            Swal.fire({ title: 'Updated!', text: 'Task was modified successfully.', icon: 'info', timer: 1500 });
+        } else {
+            createRow(titleValue, descValue, priorityValue, dateValue);
+            Swal.fire({ title: 'Added!', text: 'Your task has been created.', icon: 'success', timer: 1500 });
+        }
+        clearForm();
+    }
+
+    function createRow(title, desc, priority, date) {
+        const tbody = document.getElementById("taskList");
+        const row = document.createElement("tr");
+        const priorityWeight = { "High": 1, "Medium": 2, "Low": 3 };
+
+        row.innerHTML = `
+            <td>${title}</td>
+            <td>${desc}</td>
+            <td class="priority-${priority.toLowerCase()}" data-weight="${priorityWeight[priority]}">${priority}</td>
+            <td>${date}</td>
+            <td class="status-cell">Pending</td>
+            <td>
+                <div style="display: flex; gap: 5px;">
+                    <button class="complete-btn" onclick="toggleStatus(this)">Done</button>
+                    <button class="edit-btn" onclick="editRow(this)">Edit</button>
+                    <button class="delete-btn" onclick="deleteRow(this)">Delete</button>
+                </div>
+            </td>
+        `;
+
+        const currentRows = Array.from(tbody.querySelectorAll("tr"));
+        const successor = currentRows.find(r => {
+            const rWeight = parseInt(r.querySelector("td:nth-child(3)").dataset.weight);
+            return rWeight > priorityWeight[priority];
+        });
+
+        if (successor) { tbody.insertBefore(row, successor); } 
+        else { tbody.appendChild(row); }
+    }
+
+    function toggleStatus(btn) {
+        const row = btn.closest("tr");
+        const statusCell = row.querySelector(".status-cell");
+        const taskTitle = row.cells[0].innerText;
+
+        row.classList.toggle("completed-row"); 
+        
+        if (row.classList.contains("completed-row")) {
+            statusCell.innerText = "Completed";
+            // NEW: SweetAlert2 Success Notification
+            Swal.fire({
+                title: 'Good Job ☺☺☺!',
+                text: `Completed: ${taskTitle}`,
+                icon: 'success',
+                confirmButtonColor: '#10b981'
+            });
+        } else {
+            statusCell.innerText = "Pending"; 
+        }
+    }
+
+    function editRow(btn) {
+        const row = btn.closest("tr");
+        const cells = row.querySelectorAll("td");
+
+        document.getElementById("title").value = cells[0].innerText;
+        document.getElementById("desc-box").value = cells[1].innerText;
+        document.getElementById("priority").value = cells[2].innerText;
+        document.getElementById("dueDate").value = cells[3].innerText;
+
+        editMode = true;
+        editTargetRow = row;
+        document.getElementById("submitBtn").innerText = "Update Task";
+    }
+
+    function updateRow(title, desc, priority, date) {
+        const cells = editTargetRow.querySelectorAll("td");
+        const priorityWeight = { "High": 1, "Medium": 2, "Low": 3 };
+        
+        cells[0].innerText = title;
+        cells[1].innerText = desc;
+        cells[2].innerText = priority;
+        cells[2].className = `priority-${priority.toLowerCase()}`;
+        cells[2].dataset.weight = priorityWeight[priority];
+        cells[3].innerText = date;
+
+        editMode = false;
+        editTargetRow = null;
+        document.getElementById("submitBtn").innerText = "Add Task";
+    }
+
+    function deleteRow(btn) {
+        // NEW: SweetAlert2 Confirmation Dialog
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#ef4444',
+            cancelButtonColor: '#64748b',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                btn.closest("tr").remove();
+                Swal.fire('Deleted!', 'Task has been removed.', 'success');
+            }
+        });
+    }
+
+    function clearForm() {
+        document.getElementById("title").value = "";
+        document.getElementById("desc-box").value = "";
+        document.getElementById("priority").value = "";
+        document.getElementById("dueDate").value = "";
+    }
+</script>
+
+</body>
+</html>
